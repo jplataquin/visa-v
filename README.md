@@ -6,7 +6,7 @@ This library is suitable for both offline and online single page applications (e
 # How to install
 * Add the `<script src="visa-V.js"></script>` to the head of your main html file.
 
-* Add the hook `<script src="vhook.js"> /** Your code here **/ </script>` as the last script tag in all your views html files.
+* Add the hook `<script src="vhook.js"> /** Your code here **/ </script>` as the last script tag in all of your views html files.
 
 
 # How to use
