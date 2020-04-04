@@ -1,0 +1,69 @@
+<!-- Iniitalized Scoped template -->
+<template>
+	<div>
+		<!-- Create a scoped style to affect everything within the parent element -->
+		<style scoped>
+			h1{
+				color: blue;
+			}
+		</style>
+
+		<div>
+			<!-- Create another scoped style to affect only within this parent element -->
+			<style scoped>
+				h1{
+					color: red;
+				}
+			</style>
+			<h1 data-el="title"></h1>
+		</div>
+
+		<h1>This is another h1 element with a different scoped style</h1>
+	</div>
+
+
+	<h1>This h1 element is not affected by any scope style instead it is influenced by the global style invoked in index.html</h1>
+
+	<div data-el="nav"></div>
+	<div data-el="body"></div>
+	
+
+</template>
+
+<!-- Initialize scoped script -->
+<script src="vhook.js">
+	//Get param title and set it to "title" Element
+	title.innerHTML = $param.title || null;
+
+	//Create a custom method that can be accessed outside the code
+	$doc.setArea = function(target,content){
+
+		switch( target ){
+			case 'body':
+
+				//Clear body
+				body.innerHTML = '';
+
+				//Append content
+				body.append(content);
+
+			break
+			case 'nav':
+				//Clear nav
+				nav.innerHTML = '';
+	
+				//Append content
+				nav.append(content);
+			break;
+
+		}
+
+	}
+
+	/**
+	It is IMPORTANT to call the Ready() function once everything is done.
+	This will trigger a "ready" event on the view variable. 
+	**/	
+	Ready();
+
+</script>
