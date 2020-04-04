@@ -1,3 +1,3 @@
 # visa-V
-A micro frontend library for loading and creating html views with scoped javascript and css execution. 
-Mostly suitable for browser based "on file" and "on server" application.
+A micro library for frontend loading and rendering of HTML files with scoped javascript and css execution.
+This library is suitable for both offline and online single page applications (e.g. Cordova) or any browser based UI manipulation. 
