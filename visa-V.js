@@ -86,6 +86,10 @@
             return container.promise;
         }
 
+        //Set up clone method for view
+        container.clone = function(){
+          return this.cloneNode( true );
+        }
 
         //Initialize number of scoped style element found
         var numOfScopedStyle = 0;
