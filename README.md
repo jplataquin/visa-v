@@ -11,6 +11,7 @@ This library is suitable for both offline and online single page applications (e
 # How to use
 
 * Loading an HTML View
+
 Once visa-V is loaded you will have access to the function `vV([path,param]);` 
 
 Example:
