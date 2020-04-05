@@ -106,7 +106,7 @@ visa-V will automatically inject and HTML element from your template to your jav
 
 Extend the $doc object in your HTML views to define a custom method that can later be use to dynamically manipulate its content.
 
->>view.html
+view.html
 ```
 <template>
    <h1 data-el="titleEl"></h1>   
@@ -150,5 +150,43 @@ index.html
    </script>
  </body>
 </html>
+```
+
+### Apply scoped style stags
+
+Add the attribute "scoped" to any style tag inside your HTML view and it will only affect everything within the style tag's parent element. 
+
+```
+<template>
+   <div>
+   	<style scoped>
+		h1{
+			color: blue;
+		}
+	</style>
+	
+   	<h1>Hello World - This is Blue</h1>
+	
+	<div>
+		<style scoped>
+			h1{
+				color: red;
+			}
+		</style>
+
+		<h1>Hello World - This is Red</h1>
+	</div>
+	
+	<h1>Hello World - This is also Blue</h1>
+   </div>
+</template>
+
+<script src="path/to/vhook.js">
+ /** Any code writen here will only execute within the scope of this HTML view **/
+ 
+
+ //Call the Ready() function always after your HTML view is done and ready for consumption
+ Ready();
+</script>  
 ```
 
