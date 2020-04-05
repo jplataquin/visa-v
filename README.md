@@ -199,12 +199,12 @@ To prevent reloading the same HTML view repeatedly use the .clone() method.
 	
 	var view = vV('path/to/view.html');
 	
-	var viewA = view.clone();
-	var viewB = view.clone();
+	var view_A = view.clone();
+	var view_B = view.clone();
 	
-	document.body.append(viewA);
+	document.body.append(view_A);
 	
-	document.getElementById('#target').append(viewB);
+	document.getElementById('#target').append(view_B);
 	
 	$('.stuff').each(function(){
 	
