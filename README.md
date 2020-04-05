@@ -70,7 +70,7 @@ Adding other external script tags will execute in the global scope.
 </script>  
 ```
 
-### Features of an HTML view
+### Injected features of an HTML view
 
 The HTML view will be automatically injected with predefined functions and variables that will aid in creating user desired features.
 
@@ -80,4 +80,75 @@ Injected | Type  | Description
 $param | Javascript Variable  | An object variable that contains the 2nd paramter passed to the vV([path,params]) function.
 $doc  |  Javacript Variable | A reference dom element to the contents of the template
 Ready() | Javascript Function  | A function that triggers the "ready" event of the view, that will notify event listiners and resolve the .ready() function of the returned vV([path,params]) element.
+
+### Accessing view elements as javascript variables in your code block
+
+visa-V will automatically inject and HTML element from your template to your javascript code block using the attribute data-el="variable name".
+
+```
+<template>
+   <h1 data-el="titleEl"></h1>   
+</template>
+
+<script src="path/to/vhook.js">
+ /** Any code writen here will only execute within the scope of this HTML view **/
+ 
+ //Access the element "titleEl" from the template
+ titleEl.innerHTML = 'Hello World';
+ 
+ //Call the Ready() function always after your HTML view is done and ready for consumption
+ Ready();
+</script>  
+```
+
+
+### User defined publicly accessible methods on html views
+
+Extend the $doc object in your HTML views to define a custom method that can later be use to dynamically manipulate its content.
+
+>>view.html
+```
+<template>
+   <h1 data-el="titleEl"></h1>   
+</template>
+
+<script src="path/to/vhook.js">
+ /** Any code writen here will only execute within the scope of this HTML view **/
+ 
+ 
+ $doc.setTitle = (titleText)=>{
+   titleEl.innerHTML = titleText;
+ }
+ 
+ 
+ //Call the Ready() function always after your HTML view is done and ready for consumption
+ Ready();
+</script>  
+```
+
+
+index.html
+```
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	  <meta charset="utf-8">
+	  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+   <script src="visa-V.js"></script>
+ </head>
+ <body>
+   <div id="app"></div>
+   
+   <script>
+    var app = document.getElementById('app');
+    
+    var view = vV('path/to/view');
+    
+    app.append(view);
+    
+    view.setTitle('Hello World');
+   </script>
+ </body>
+</html>
+```
 
