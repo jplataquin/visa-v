@@ -79,5 +79,5 @@ Injected | Type  | Description
 ---------|-------|-------------
 $param | Javascript Variable  | An object variable that contains the 2nd paramter passed to the vV([path,params]) function.
 $doc  |  Javacript Variable | A reference dom element to the contents of the template
-Ready() | Javascript Function  | A function that triggers the "ready" event that will notify event listiners and resolve the .ready() function of the returned vV([path,params]) element.
+Ready() | Javascript Function  | A function that triggers the "ready" event of the view, that will notify event listiners and resolve the .ready() function of the returned vV([path,params]) element.
 
