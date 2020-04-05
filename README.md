@@ -86,7 +86,7 @@ Ready() | Javascript Function  | A function that triggers the "ready" event of t
 
 ### Accessing view elements as javascript variables in your code block
 
-visa-V will automatically inject and HTML element from your template to your javascript code block using the attribute data-el="variable name".
+visa-V will automatically inject HTML element from your template to your javascript code block using the attribute data-el="variable name".
 
 ```
 <template>
