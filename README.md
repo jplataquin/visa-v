@@ -25,20 +25,44 @@ Method      | Description
 promise     | The defered internal promise object used in the .ready() method
 .*          | Custom user defined methods that are made publicly accesible for a number of user defined features.
  
-  
- * Creating an HTML View
- For your HTML Views to work it must follow the format below 
- ```
- <template>
-   <h1>Hello Wordl</h1>   
- </template>
 
- <script src="path/to/vhook.js">
-  /** Any code writen here will only execute within the scope of this HTML view **/
-  
-  //Call the Ready() function always after your HTML view is done and ready for consumption
-   Ready()
-  </script>  
-  ```
+* Creating an HTML View
+For your HTML Views to work it must follow the format below 
  
+```
+<template>
+   <h1>Hello Wordl</h1>   
+</template>
+
+<script src="path/to/vhook.js">
+ /** Any code writen here will only execute within the scope of this HTML view **/
+
+ //Call the Ready() function always after your HTML view is done and ready for consumption
+ Ready();
+</script>  
+```
+ 
+ * Alternate format for HTML views
+Note that only the last javascript code block will be used for execution within the HTML view's scope.
+Adding other external script tags will execute in the global scope.
+ 
+```
+<template>
+   <h1>Hello Wordl</h1>   
+</template>
+
+<!-- Optional -->
+<script src="3rd/party.js"></script>
+
+<!-- vhook.js is required for the HTML views to work -->
+<script src="path/to/vhook.js"></script>
+
+<!-- The last javascript code block -->
+<script>
+ /** Any code writen here will only execute within the scope of this HTML view **/
+
+ //Call the Ready() function always after your HTML view is done and ready for consumption
+ Ready();
+</script>  
+```
 
