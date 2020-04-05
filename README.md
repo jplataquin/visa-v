@@ -23,7 +23,8 @@ The return value will be a div element with some few additional properties and m
 Method      | Description
 ------------|-------------
 .ready()    | Returns a promise that will resolve if the view is deemed ready.
-promise     | The defered internal promise object used in the .ready() method
+.promise    | The defered internal promise object used in the .ready() method
+.clone().   | Method to clone the view.	
 .*          | Custom user defined methods that are made publicly accesible for a number of user defined features.
  
 
@@ -142,7 +143,7 @@ index.html
    <script>
     var app = document.getElementById('app');
     
-    var view = vV('path/to/view');
+    var view = vV('path/to/view.html');
     
     app.append(view);
     
@@ -190,3 +191,24 @@ Add the attribute "scoped" to any style tag inside your HTML view and it will on
 </script>  
 ```
 
+### Cloning an HTML view
+
+To prevent reloading the same HTML view repeatedly use the .clone() method.
+
+```javascript
+	
+	var view = vV('path/to/view.html');
+	
+	var viewA = view.clone();
+	var viewB = view.clone();
+	
+	document.body.append(viewA);
+	
+	document.getElementById('#target').append(viewB);
+	
+	$('.stuff').each(function(){
+	
+		this.append(view.clone());
+	});
+
+```
