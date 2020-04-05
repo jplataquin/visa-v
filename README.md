@@ -26,7 +26,8 @@ Method      | Description
 ------------|-------------
 .ready()    | Returns a promise that will resolve if the view is deemed ready.
 .promise    | The defered internal promise object used in the .ready() method
-.clone().   | Method to clone the view.	
+.clone()    | Method to clone the view.
+.cloneData  | property that contains the information needed to clone the view.	
 .*          | Custom user defined methods that are made publicly accesible for a number of user defined features.
  
 
@@ -197,20 +198,29 @@ Add the attribute "scoped" to any style tag inside your HTML view and it will on
 
 To prevent reloading the same HTML view repeatedly use the .clone() method.
 
+The view must have a "ready" status in order to be cloned.
+
 ```javascript
 	
 	var view = vV('path/to/view.html');
 	
-	var view_A = view.clone();
-	var view_B = view.clone();
-	
-	document.body.append(view_A);
-	
-	document.getElementById('#target').append(view_B);
-	
-	$('.stuff').each(function(){
-	
-		this.append(view.clone());
-	});
+	view.ready().then(()=>{
+		
+		var view_A = view.clone();
+		var view_B = view.clone();
 
+		document.body.append(view_A);
+
+		document.getElementById('#target').append(view_B);
+
+		$('.stuff').each(function(){
+
+			this.append(view.clone());
+		});
+		
+	});
+	
 ```
+
+# Debugging visa-V
+Set 
