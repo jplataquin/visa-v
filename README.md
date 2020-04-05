@@ -223,4 +223,4 @@ The view must have a "ready" status in order to be cloned.
 ```
 
 # Debugging visa-V
-Set 
+Set the golbal varialble ```vVconfig.debug = 1;``` default is 0 to activate console logs.
