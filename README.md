@@ -8,21 +8,37 @@ This library is suitable for both offline and online single page applications (e
 
 * Add the hook `<script src="vhook.js"> /** Your code here **/ </script>` as the last script tag in all of your views html files.
 
-
 # How to use
 
 * Loading an HTML View
->>Once visa-V is loaded you will have access to the function `vV([path,param]);` 
+Once visa-V is loaded you will have access to the function `vV([path,param]);` 
 
- >> Example:
- >> ```javascript
- >> var view = vV('path/to/view',{title:'Hello World'});
- >> ```
- >> The return value will be a div element with some few additional properties and methods.
- >> Method | Description
- >> ------------ | -------------
- >> .ready() | Returns a promise that will resolve if the view is deemed ready.
- >> promise | The defered internal promise object used in the .ready() method
- >> .* | Custom user defined methods that are made publicly accesible for a number of user defined features.
+Example:
+```javascript
+var view = vV('path/to/view.html',{title:'Hello World'});
+```
 
+The return value will be a div element with some few additional properties and methods.
+Method      | Description
+------------|-------------
+.ready()    | Returns a promise that will resolve if the view is deemed ready.
+promise     | The defered internal promise object used in the .ready() method
+.*          | Custom user defined methods that are made publicly accesible for a number of user defined features.
+ 
+  
+ * Creating an HTML View
+ For your HTML Views to work it must follow the format below 
+ ```
+ <template>
+   <h1>Hello Wordl</h1>   
+ </template>
+
+ <script src="path/to/vhook.js">
+  /** Any code writen here will only execute within the scope of this HTML view **/
+  
+  //Call the Ready() function always after your HTML view is done and ready for consumption
+   Ready()
+  </script>  
+  ```
+ 
 
