@@ -10,7 +10,7 @@ This library is suitable for both offline and online single page applications (e
 
 # How to use
 
-* Loading an HTML View
+### Loading an HTML View
 
 Once visa-V is loaded you will have access to the function `vV([path,param]);` 
 
@@ -27,7 +27,8 @@ promise     | The defered internal promise object used in the .ready() method
 .*          | Custom user defined methods that are made publicly accesible for a number of user defined features.
  
 
-* Creating an HTML View
+### Creating an HTML View
+
 For your HTML Views to work it must follow the format below 
  
 ```
@@ -43,8 +44,10 @@ For your HTML Views to work it must follow the format below
 </script>  
 ```
  
- * Alternate format for HTML views
+### Alternate format for HTML views
+
 Note that only the last javascript code block will be used for execution within the HTML view's scope.
+
 Adding other external script tags will execute in the global scope.
  
 ```
