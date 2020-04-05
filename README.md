@@ -17,6 +17,8 @@ Once visa-V is loaded you will have access to the function `vV([path,param]);`
 Example:
 ```javascript
 var view = vV('path/to/view.html',{title:'Hello World'});
+
+document.body.append(view);
 ```
 
 The return value will be a div element with some few additional properties and methods.
