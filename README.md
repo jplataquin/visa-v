@@ -247,4 +247,4 @@ The view must have a "ready" status in order to be cloned.
 Set the golbal varialble ```vVconfig.debug = 1;``` default is 0 to activate console logs.
 
 Most of the issues you might encounter will be related to the correct path of the view. 
-If you are serving your application from an http server, then you must use the http// url of the view. But if you are running your application on file locally without an http server (e.g. Cordova applications), then you must use the relative file path of the view. 
+If you are serving your application from an http server, then you must use the http:// url of the view. But if you are running your application on file locally without an http server (e.g. Cordova applications), then you must use the relative file path of the view. 
