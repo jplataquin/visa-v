@@ -1,6 +1,7 @@
 # visa-V
 A micro library for frontend loading and rendering of HTML files with scoped javascript and css execution.
-This library is suitable for both applications that are not running on an http server (e.g. Cordova), and applications that are served from an http server.
+
+This library is suitable for both applications that are run on file:// without an http server (e.g. Cordova), and applications that are served from an http server.
 
 ```javascript
 	
@@ -43,10 +44,11 @@ The return value will be a div element with some few additional properties and m
 Method      | Description
 ------------|-------------
 .ready()    | Returns a promise that will resolve if the view is deemed ready.
-.promise    | The defered internal promise object used in the .ready() method
 .clone()    | Method to clone the view.
+.setArea([target,content])  | Method use to set the area of a view. The first parameter is the name of the targeted area, while the second parameter is the content to be rendered.
+.promise    | The defered internal promise object used in the .ready() method
 .cloneData  | property that contains the information needed to clone the view.	
-.*          | Custom user defined methods that are made publicly accesible for a number of user defined features.
+.*          | Custom user defined properties and methods.
  
 
 ### Creating an HTML View
