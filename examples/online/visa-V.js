@@ -138,6 +138,22 @@
           return container;
         }
 
+        //Set up area method for view
+        container.setArea = function(target,content){
+          
+          let t = container.querySelector('[data-area="'+target+'"');
+
+          if(t){
+           
+            t.innerHTML = '';
+            t.append(content);
+
+          }else{
+            throw 'vV: Area '+target+' not found';
+          }
+         
+        }
+
         //Initialize number of scoped style element found
         var numOfScopedStyle = 0;
 

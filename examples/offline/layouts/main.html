@@ -24,8 +24,8 @@
 
 	<h1>This h1 element is not affected by any scope style instead it is influenced by the global style invoked in index.html</h1>
 
-	<div data-el="nav"></div>
-	<div data-el="body"></div>
+	<div data-area="nav"></div>
+	<div data-area="body"></div>
 	
 
 </template>
@@ -35,28 +35,23 @@
 	//Get param title and set it to "title" Element
 	title.innerHTML = Param('title');
 
-	//Create a custom method that can be accessed outside the code
-	$doc.setArea = function(target,content){
+	var color = 256;
 
-		switch( target ){
-			case 'body':
+	function animate() {
 
-				//Clear body
-				body.innerHTML = '';
+	  if(color >= 0){
 
-				//Append content
-				body.append(content);
+	  	color = color - 1;
 
-			break
-			case 'nav':
-				//Clear nav
-				nav.innerHTML = '';
+	  	$doc.style['background-color'] = 'rgb('+color+','+color+','+color+')';
+	  	requestAnimationFrame(animate);
+	  }
+	}
 	
-				//Append content
-				nav.append(content);
-			break;
+	//Create a custom publicly avaiable method
+	$doc.doAnimation = function(){
 
-		}
+		animate();
 
 	}
 

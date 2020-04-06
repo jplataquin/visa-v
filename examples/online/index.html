@@ -65,6 +65,9 @@
 			//This event will only fire once
 			layout.addEventListener('ready',function(){
 				console.log('Layout is ready');
+
+				//Call custom method
+				layout.doAnimation();
 			});
 
 			//varaibles for caching views
