@@ -31,9 +31,9 @@
 </template>
 
 <!-- Initialize scoped script -->
-<script src="vhook.js">
+<script src="/vhook.js">
 	//Get param title and set it to "title" Element
-	title.innerHTML = Param('title');
+	title.innerHTML = Param('title','Some Defeault');
 
 	//Create a custom method that can be accessed outside the code
 	$doc.setArea = function(target,content){

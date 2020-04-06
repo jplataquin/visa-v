@@ -19,7 +19,7 @@
 
   //get last script from dom
   let scripts = document.getElementsByTagName('script');
-  let script = scripts[scripts-1] || '{}';
+  let script = scripts[scripts.length-1] || '{}';
 
   //Prepare message
   var message = {

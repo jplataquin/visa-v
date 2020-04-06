@@ -1,0 +1,31 @@
+<!-- Iniitalized Scoped template -->
+<template>
+	<ul>
+		<li>
+			<a href="a">Show A</a>
+		</li>
+		<li>
+			<a href="b">Show B</a>
+		</li>
+	</ul>
+</template>
+
+<!-- Initialize scoped script -->
+<script src="/vhook.js">
+
+
+	var a = $doc.querySelectorAll('a').forEach((el)=>{
+		el.onclick = function(e){
+			e.preventDefault();
+
+			if(!e.ctrlKey) {
+
+				router.navigate(this.getAttribute('href'));
+			}
+		}
+	});
+
+
+
+	Ready();
+</script>

@@ -28,8 +28,9 @@
     template: template.innerHTML,
     script: script.innerHTML
   }
-  
-  //Send Message to parent
+
+  //Send Message to parents
   parent.postMessage(JSON.stringify(message), "*");
+
 
 })();

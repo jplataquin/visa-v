@@ -16,11 +16,13 @@
 	  			font-size:20px;
 	  		}
 	  </style>
+
 	  <!-- Load the visa-V library -->
 	  <script src="visa-V.js"></script>
+	  
 	</head>
 	<body>
-		This is a simple offline application that demonstrates the usecase of using visa-V in a Single Page Application. 
+		This is a simple offline application that demonstrates the usecase of using visa-V in a Single Page Application. Run the index.html in your browser without an http server.
 
 
 		<hr>
@@ -78,6 +80,8 @@
 				if(document.location.hash == '' || document.location.hash == '#' || document.location.hash == '#a')
 				{
 					console.log('Content A');
+
+
 					//Alternatively you can use the ready() promise function to handle the on "ready" event
 					mainLayout.ready().then(()=>{
 
@@ -87,6 +91,7 @@
 						//Use custom methods defined in main.html to set certain area of the layout.
 						mainLayout.setArea('body',contentA);
 						mainLayout.setArea('nav',nav);
+						
 					});
 
 				}else if(document.location.hash == '#b'){

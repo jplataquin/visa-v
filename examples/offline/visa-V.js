@@ -9,9 +9,36 @@
  */
 (function(){
 
+
+    //Check if visa V has already been loaded
+    if(typeof window.vV != 'undefined'){
+
+      if(window.vVconfig.debug  == 1){
+        console.log('vV: visa-V was loaded more than once');
+      }
+
+      return false;
+    }
+
+    window.vVconfig = {
+      debug:0
+    };
+
+
     //Initalize script eval function for layout.
     //Use crazy fonts to make it hard for user code to access them.
     let iframe_eval = function(ć̴̡̢̤̣̠͖̦̜́͆̍̈́͐̊͗ớ̴̼̙̜̦̣̈́͌̏̾m̷̢̢̡̭͉̥̮̤͗̄̓̈̋̈́̈̓̈́̕m̷̨̖̥͚͍͔̓̿̍̀a̴͓̼̟̗̤͕͛̌̃͌̂͜n̷̯̒̌̎̎̀̈́́̓̓̓d̶͈̟̥̗̈́̿̈́̎́,$doc,$param,ȇ̸͕̪̱̟̱̫͆̄͋̈́ͅͅl̵̹͎̱̲̤͐̓̄̿̓̇͒s̶̺͕̬͖̎͊̀͂͑̿͗͠){
+
+        
+        //Inject Param Function
+        function Param(name,$default){
+
+          if($param===null) return $default || ''; 
+          if(typeof $param[name] == 'undefined') return $default || '';
+            
+          return $param[name];
+        }
+
 
         //Inject Ready Function to let user triger "ready" event;
         function Ready(){  let event = new Event("ready"); $doc.dispatchEvent(event); };
@@ -71,8 +98,12 @@
             params    : params
         }
 
-        //append iframe to body so it will be initialized
+        //append iframe to body so it will be initialized      
         document.body.append(iframe);
+
+        if(window.vVconfig.debug == 1){
+          console.log("vV: iFrame url:"+iframe.src+" attached to body");
+        }
 
         //Set up a promise for when the view is ready it will resolve, attach to container for easy access later on
         container.promise =  new Promise((resolve)=>{
@@ -81,11 +112,31 @@
             });
         });
 
+
         //Set up on ready promise interface for user
         container.ready = function(){
-            return container.promise;
+          if(window.vVconfig.debug == 1){
+            console.log("vV: view "+id+" is ready");
+          }
+          return container.promise;
         }
 
+        //Set up clone method for view
+        container.clone = function(){
+
+          let container  = document.createElement('div');
+          let script     = this.cloneData.script;
+          let template   = this.cloneData.template;
+          let params     = this.cloneData.params;
+
+          container.innerHTML = template;
+
+          var els = container.querySelectorAll('[data-el]');
+               
+          iframe_eval(script,container,params,els);
+          
+          return container;
+        }
 
         //Initialize number of scoped style element found
         var numOfScopedStyle = 0;
@@ -161,18 +212,31 @@
     //Listen for iframe hook event
     eventer(messageEvent,function(e) {
 
+
           //Ignore unauthorized messages from other domains
           if(
               (window.location.protocol == 'https:' || window.location.protocol == 'http:') && 
               e.origin != window.location.origin &&  
               location.hostname != 'localhost'
           ){
+
+              if(window.vVconfig.debug == 1){
+                console.log('vV: Post message blocked, protocol or origin unauthorized');
+                console.log(e);
+              }
+
               return false;          
           }else if(
                window.location.protocol == 'file:' && 
                e.origin != 'null' && 
                e.origin != 'file://'
           ){
+
+             if(window.vVconfig.debug == 1){
+                console.log('vV: Post message blocked, protocol or origin unauthorized');
+                console.log(e);
+              }
+              
               return false;
           }
 
@@ -180,6 +244,12 @@
           try{
               var message = JSON.parse(e.data);
           }catch(e){
+
+              if(window.vVconfig.debug == 1){
+                console.log("vV: Post message can't be parsed by json");
+                console.log(e.data);
+              }
+              
               return false;//Ignore message
           }
 
@@ -189,12 +259,31 @@
              typeof message['template'] == 'undefined' ||
              typeof message['script']   == 'undefined' 
           ){
+
+              if(window.vVconfig.debug == 1){
+                console.log("vV: Incomplete message content");
+                console.log(message);
+              }
+
               return false;//Ignore message
           }
 
           //Check if this hook is a type view
-          if(!message.hookType != 'view') return false;
-          
+          if(message.hookType != 'view') {
+            
+            if(window.vVconfig.debug == 1){
+              console.log("vV: hookType is not valid");
+              console.log(message.hookType);
+            }
+
+            return false;
+          }
+
+          //Strange quirk that happens when the event is fired before the frame is registered
+          if(typeof internal_scope_registry_of_views[message.id] == 'undefined'){
+            return false;
+          }
+
           //Initialize variables from id
           let container     = internal_scope_registry_of_views[message.id].container;
           let iframe        = internal_scope_registry_of_views[message.id].iframe;
@@ -203,6 +292,11 @@
           //Get template and script from message
           let template      = message.template
           let script        = message.script;
+
+          container.cloneData           = {};
+          container.cloneData.template  = template;
+          container.cloneData.script    = script;
+          container.cloneData.params    = params;
 
           //Render template to container
           container.innerHTML = template;
