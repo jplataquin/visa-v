@@ -1,7 +1,25 @@
 # visa-V
 A micro library for frontend loading and rendering of HTML files with scoped javascript and css execution.
-This library is suitable for both offline and online single page applications (e.g. Cordova) or any browser based UI manipulation. 
+This library is suitable for both applications that are not running on an http server (e.g. Cordova), and applications that are served from an http server.
 
+```javascript
+	
+	var App = document.querySelector('#app');
+	
+	var layout = vV('path/to/layout.html',{
+		title:'Hello World'
+	});
+	
+	App.append(layout);
+	
+	layout.ready().then(()=>{
+	
+		let content = vV('path/to/content.html');
+		
+		layout.setArea('content',content);
+	});
+	
+```
 
 # How to install
 * Add the `<script src="visa-V.js"></script>` to the head of your main html file.
@@ -225,3 +243,6 @@ The view must have a "ready" status in order to be cloned.
 
 # Debugging visa-V
 Set the golbal varialble ```vVconfig.debug = 1;``` default is 0 to activate console logs.
+
+Most of the issues you might encounter will be related to the correct path of the view. 
+If you are serving your application from an http server, then you must use the http// url of the view. But if you are running your application on file locally without an http server (e.g. Cordova applications), then you must use the relative file path of the view. 
