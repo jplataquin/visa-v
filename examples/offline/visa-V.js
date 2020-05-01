@@ -1,6 +1,5 @@
 /*!
  * visa-V JavaScript Library v1.0.0
- * https://jquery.com/
  *
  * Author John Patrick Lataquin
  * Released under the MIT license

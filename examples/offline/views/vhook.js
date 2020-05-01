@@ -1,6 +1,5 @@
 /*!
  * Hook for visa-V iframe content v1.0.0
- * https://jquery.com/
  *
  * Author John Patrick Lataquin
  * Released under the MIT license
@@ -9,7 +8,7 @@
  *
  * Date: 2020-04-05
  */
- (function(){
+(function(){
 
   //Get id from hash
   let hash = document.location.hash.replace('#','');
@@ -28,9 +27,8 @@
     template: template.innerHTML,
     script: script.innerHTML
   }
-
-  //Send Message to parents
+  
+  //Send Message to parent
   parent.postMessage(JSON.stringify(message), "*");
-
 
 })();
