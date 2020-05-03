@@ -1,0 +1,34 @@
+{
+  "name": "visa-v",
+  "version": "1.0.0",
+  "description": "A micro library for frontend loading and manipulation of HTML views with scoped css and javascript.",
+  "main": "visa-V.js",
+  "module":"visa-V.js",
+  "directories": {
+    "example": "examples"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jplataquin/visa-V.git"
+  },
+  "keywords": [
+    "html",
+    "dom",
+    "view",
+    "frontend",
+    "file",
+    "protocol",
+    "scoped",
+    "css",
+    "browser"
+  ],
+  "author": "John Patrick Lataquin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jplataquin/visa-V/issues"
+  },
+  "homepage": "https://github.com/jplataquin/visa-V#readme"
+}

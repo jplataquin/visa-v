@@ -1,11 +1,17 @@
 /*!
  * visa-V JavaScript Library v1.0.0
  *
+ * A micro library for frontend loading and manipulation of HTML views with scoped css and javascript.
+ * It can load HTML views even without an http server, making it suitable for applications that are useing file:// protocol (e.g. Cordova).
+ *
  * Author John Patrick Lataquin
  * Released under the MIT license
  * 
  * Date: 2020-04-05
  */
+
+"use strict";
+
 (function(){
 
 

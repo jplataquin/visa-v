@@ -4,12 +4,6 @@
 	  <meta charset="utf-8">
 	  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	  
-	  <!-- We will use navigo to make our life easier -->
-	  <script src="//unpkg.com/navigo@6"></script>
-
-	  <!-- Load visa-V -->
-	  <script src="/visa-V.js"></script>
-
 	  <!-- Unscoped Global CSS -->
 	  <style>
 	  		h1{
@@ -25,41 +19,30 @@
 	</head>
 	<body>
 		This is a simple online application that demonstrates the usecase of using visa-V in an http server.
-
-
 		<hr>
 		<!-- Create an element container to render the views -->
 		<div id="app"></div>
 
-		<script>
+		<script type="module">
+			//We will use navigo to make routing easier
+			import * as pkg from 'https://cdn.pika.dev/navigo/^7.1.2';
 
+			//import visa-V
+			import '/visa-V.js';
+			
+			
+			//Initialize Navigo router and set it to the global scope so other views can access it
+			window.router = new pkg.default();
+			
 			//Get reference to #app element.
 			var App = document.getElementById('app');
 			
-			//A helper fucntion to help us guess the site URL 
-			function siteURL(url){
-				let protocol 	= location.protocol; 
-	            let domain 		= location.hostname; 
-	            let port 		= location.port;
-
-	           
-	            if(typeof url == 'undefined'){
-	            	url = '';
-	            }
-
-	            if(port){
-	            	return protocol+'//'+domain+':'+port+''+url;
-	            }
-
-	            return protocol+'//'+domain+''+url;
-	          
-			}
-
-		
-			var layout = vV( siteURL('/layouts/main.html') ,{
+			//Load the main layout
+			var layout = vV('/layouts/main.html' ,{
 				title: 'Hello World'
 			});
 
+			//Mount the layout to the div so it will be visible
 			App.append(layout);
 
 			//This event will only fire once
@@ -76,7 +59,7 @@
 
 
 			//Load the nav view
-			let nav = vV( siteURL('/views/nav.html') );
+			let nav = vV('/views/nav.html' );
 
 			//Set the nav view to the layout
 			layout.ready().then(()=>{
@@ -84,12 +67,10 @@
 			});
 			
 			
-			//Initialize Navigo router
-			var router = new Navigo();
 
 			router.on('/',()=>{
 		
-				content_a = content_a || vV( siteURL('/views/sampleContentA.html') );
+				content_a = content_a || vV('/views/sampleContentA.html');
 
 				layout.ready().then(()=>{
 					layout.setArea('body',content_a);
@@ -97,7 +78,7 @@
 				
 			}).on('/a',()=>{
 
-				var content_a = content_a || vV( siteURL('/views/sampleContentA.html') );
+				content_a = content_a || vV('/views/sampleContentA.html');
 
 				layout.ready().then(()=>{
 					layout.setArea('body',content_a);
@@ -106,7 +87,9 @@
 
 			}).on('/b',()=>{
 
-				var content_b = content_b || vV( siteURL('/views/sampleContentB.html') );
+				content_b = content_b ||  vV('/views/sampleContentB.html');
+
+
 
 				layout.ready().then(()=>{
 					layout.setArea('body',content_b);

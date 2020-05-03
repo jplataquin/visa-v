@@ -1,31 +1,65 @@
 # visa-V
-A micro library for frontend loading and rendering of HTML files with scoped javascript and css execution.
+A micro library for frontend loading and manipulation of HTML views with scoped css and javascript.
+It can load HTML views even without an http server, making it suitable for applications that are useing file:// protocol (e.g. Cordova).
 
-This library is suitable for both applications that are run on file:// without an http server (e.g. Cordova), and applications that are served from an http server.
+# Hello World Example
 
-```javascript
-	
-	var App = document.querySelector('#app');
-	
-	var layout = vV('path/to/layout.html',{
-		title:'Hello World'
-	});
-	
-	App.append(layout);
-	
-	layout.ready().then(()=>{
-	
-		let content = vV('path/to/content.html');
-		
-		layout.setArea('content',content);
-	});
+* index.html
+
+```html
+<html>
+	<head></head>
+	<body>
+		<div id="root"></div>
+		<script type="module">
+			import './visa-V.js';
+
+			var root = document.querySelector('#root');
+			
+			var layout = vV('path/to/layout.html',{
+				title:'Hello World'
+			});
+			
+			root.append(layout);
+			
+		</script>
+	</body>
+</html>
 	
 ```
 
-# How to install
-* Add the `<script src="visa-V.js"></script>` to the head of your main html file.
+* layout.html
 
-* Add the hook `<script src="vhook.js"> /** Your code here **/ </script>` as the last script tag in all of your views html files.
+```html
+	<template>
+		<h1 data-el="title"></h1>
+	</template>
+	<script src="vhook.js">
+		({
+			init: function(){
+				title.innerHTML = Param('title','No Message');
+				
+				Ready();
+			}
+		}).init();
+	</script>
+```
+
+# How to install
+
+## NPM
+	npm install visa-v
+* Then copy the vhook.js and place it at the top of your application folder so you can refernece it in your HTML views.
+
+## Traditional Way
+* Download the zip fle and add the `<script src="path/to/visa-V.js"></script>` to the head of your main html file.
+* Add the hook `<script src="vhook.js"> /** Your code here **/ </script>` as the last script tag in all of your view html files.
+
+## ESM Import
+```javascript
+	import './visa-V.js';
+```
+* Add the hook `<script src="vhook.js"> /** Your code here **/ </script>` as the last script tag in all of your view html files.
 
 # How to use
 
@@ -53,18 +87,20 @@ Method      | Description
 
 ### Creating an HTML View
 
-For your HTML Views to work it must follow the format below 
+visa-V uses hidden iframes to load your HTML views and then passes the data to the caller via a post message hook.
+So in order for your views to work, you must reference vhook.js in all of your HTML views.
+Follow the template below so in order to call an HTML view using visa-V.
  
-```
+```HTML
 <template>
    <h1>Hello Wordl</h1>   
 </template>
 
-<script src="path/to/vhook.js">
- /** Any code writen here will only execute within the scope of this HTML view **/
+<script src="/path/to/vhook.js">
+	/** Any code writen here will only execute within the scope of this HTML view **/
 
- //Call the Ready() function always after your HTML view is done and ready for consumption
- Ready();
+	//Call the Ready() function always after your HTML view is done and ready for consumption
+	Ready();
 </script>  
 ```
  
@@ -74,7 +110,7 @@ Note that only the last javascript code block will be used for execution within 
 
 Adding other external script tags will execute in the global scope.
  
-```
+```HTML
 <template>
    <h1>Hello Wordl</h1>   
 </template>
@@ -85,12 +121,31 @@ Adding other external script tags will execute in the global scope.
 <!-- vhook.js is required for the HTML views to work -->
 <script src="path/to/vhook.js"></script>
 
-<!-- The last javascript code block -->
+<!-- Only the last javascript code block outside the <template> will be executed -->
 <script>
- /** Any code writen here will only execute within the scope of this HTML view **/
+	/** Any code writen here will only execute within the scope of this HTML view **/
 
- //Call the Ready() function always after your HTML view is done and ready for consumption
- Ready();
+	//Call the Ready() function always after your HTML view is done and ready for consumption
+	Ready();
+</script>  
+```
+### When calling ESM import in HTML view use dynamic import()
+```HTML
+<template>
+   <h1>Hello Wordl</h1>   
+</template>
+
+<script src="/path/to/vhook.js">
+	(async ()=>{
+
+		let {something} = await import('libriary.js');
+
+		something();
+
+		//Call the Ready() function always after your HTML view is done and ready for consumption
+		Ready();
+
+	})();
 </script>  
 ```
 
@@ -103,26 +158,26 @@ Injected | Type  | Description
 ---------|-------|-------------
 $param | Javascript Variable  | An object variable that contains the 2nd paramter passed to the vV([path,params]) function.
 $doc  |  Javacript Variable | A reference dom element to the contents of the template
-.Param([key,default]) | Javascript Function | A function that returns the value of the selected key in $param. The second paramter is returned as a default if the key does not exist. 
-.Ready() | Javascript Function  | A function that triggers the "ready" event of the view, that will notify event listiners and resolve the .ready() function of the returned vV([path,params]) element.
+Param([key,default]) | Javascript Function | A function that returns the value of the selected key in $param. The second paramter is returned as a default if the key does not exist. 
+Ready() | Javascript Function  | A function that triggers the "ready" event of the view, that will notify event listiners and resolve the .ready() function of the returned vV([path,params]) element.
 
 ### Accessing view elements as javascript variables in your code block
 
 visa-V will automatically inject HTML element from your template to your javascript code block using the attribute data-el="variable name".
 
-```
+```HTML
 <template>
-   <h1 data-el="titleEl"></h1>   
+   <h1 data-el="titleElement"></h1>   
 </template>
 
 <script src="path/to/vhook.js">
- /** Any code writen here will only execute within the scope of this HTML view **/
- 
- //Access the element "titleEl" from the template
- titleEl.innerHTML = 'Hello World';
- 
- //Call the Ready() function always after your HTML view is done and ready for consumption
- Ready();
+	/** Any code writen here will only execute within the scope of this HTML view **/
+	
+	//Access the element "titleElement" from the template
+	titleElement.innerHTML = 'Hello World';
+	
+	//Call the Ready() function always after your HTML view is done and ready for consumption
+	Ready();
 </script>  
 ```
 
@@ -132,46 +187,48 @@ visa-V will automatically inject HTML element from your template to your javascr
 Extend the $doc object in your HTML views to define a custom method that can later be use to dynamically manipulate its content.
 
 view.html
-```
+```html
 <template>
    <h1 data-el="titleEl"></h1>   
 </template>
 
 <script src="path/to/vhook.js">
- /** Any code writen here will only execute within the scope of this HTML view **/
- 
- 
- $doc.setTitle = (titleText)=>{
-   titleEl.innerHTML = titleText;
- }
- 
- 
- //Call the Ready() function always after your HTML view is done and ready for consumption
- Ready();
+	/** Any code writen here will only execute within the scope of this HTML view **/
+	
+	
+	$doc.setTitle = (titleText)=>{
+	titleEl.innerHTML = titleText;
+	}
+	
+	
+	//Call the Ready() function always after your HTML view is done and ready for consumption
+	Ready();
 </script>  
 ```
 
 
 index.html
-```
+```html
 <!DOCTYPE html>
 <html lang="en">
 	<head>
 	  <meta charset="utf-8">
 	  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-   <script src="visa-V.js"></script>
  </head>
  <body>
    <div id="app"></div>
    
-   <script>
+   <script type="module">
+	import '/visa-V.js';
+
     var app = document.getElementById('app');
     
     var view = vV('path/to/view.html');
     
     app.append(view);
     
-    view.setTitle('Hello World');
+	view.setTitle('Hello World');
+	
    </script>
  </body>
 </html>
@@ -181,7 +238,7 @@ index.html
 
 Add the attribute "scoped" to any style tag inside your HTML view and it will only affect everything within the style tag's parent element. 
 
-```
+```html
 <template>
    <div>
    	<style scoped>
@@ -207,11 +264,11 @@ Add the attribute "scoped" to any style tag inside your HTML view and it will on
 </template>
 
 <script src="path/to/vhook.js">
- /** Any code writen here will only execute within the scope of this HTML view **/
- 
+	/** Any code writen here will only execute within the scope of this HTML view **/
+	
 
- //Call the Ready() function always after your HTML view is done and ready for consumption
- Ready();
+	//Call the Ready() function always after your HTML view is done and ready for consumption
+	Ready();
 </script>  
 ```
 

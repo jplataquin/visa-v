@@ -13,13 +13,14 @@
 <!-- Initialize scoped script -->
 <script src="/vhook.js">
 
-
+	
 	var a = $doc.querySelectorAll('a').forEach((el)=>{
 		el.onclick = function(e){
 			e.preventDefault();
 
 			if(!e.ctrlKey) {
 
+				//We can call router becuase we have set it to the global window in index.html
 				router.navigate(this.getAttribute('href'));
 			}
 		}

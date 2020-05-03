@@ -8,6 +8,9 @@
  *
  * Date: 2020-04-05
  */
+
+ "use strict";
+ 
  (function(){
 
   //Get id from hash
