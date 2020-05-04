@@ -2,8 +2,8 @@
   "name": "visa-v",
   "version": "1.0.0",
   "description": "A micro library for frontend loading and manipulation of HTML views with scoped css and javascript.",
-  "main": "visa-V.js",
-  "module":"visa-V.js",
+  "main": "visa-v.js",
+  "module":"visa-v.js",
   "directories": {
     "example": "examples"
   },
